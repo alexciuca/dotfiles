@@ -342,6 +342,7 @@ require("lazy").setup({
 				"html",
 				"css",
 				"c_sharp",
+				"java",
 			},
 			auto_install = true,
 			highlight = { enable = true },
@@ -609,6 +610,10 @@ require("lazy").setup({
 				neotest.output.open({ enter = true })
 			end, { desc = "Open test output" })
 		end,
+	},
+	{
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
 	},
 }, {
 	checker = { enabled = false },
