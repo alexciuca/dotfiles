@@ -1,0 +1,61 @@
+return {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		event = { "BufReadPost", "BufNewFile" },
+		opts = {
+			ensure_installed = {
+				"lua",
+				"vim",
+				"vimdoc",
+				"python",
+				"c",
+				"cpp",
+				"cmake",
+				"make",
+				"go",
+				"gomod",
+				"gosum",
+				"gowork",
+				"java",
+				"scala",
+				"kotlin",
+				"c_sharp",
+				"javascript",
+				"typescript",
+				"tsx",
+				"json",
+				"yaml",
+				"html",
+				"css",
+				"xml",
+				"markdown",
+				"markdown_inline",
+				"bash",
+				"make",
+				"dockerfile",
+				"sql",
+			},
+			auto_install = true,
+			highlight = { enable = true },
+			indent = { enable = true },
+		},
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+		end,
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
+	{ "tpope/vim-surround", event = "VeryLazy" },
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		event = "InsertEnter",
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	},
+}
