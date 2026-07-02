@@ -30,6 +30,13 @@ return {
 				{ "<leader>r", group = "rename/refactor" },
 				{ "<leader>j", group = "java" },
 				{ "<leader>g", group = "git" },
+				{ "<leader>e", desc = "Line diagnostics" },
+				{ "<leader>q", desc = "Diagnostics → loclist" },
+				{ "<leader>sd", desc = "Search diagnostics" },
+				{ "]d", desc = "Next diagnostic" },
+				{ "[d", desc = "Previous diagnostic" },
+				{ "]e", desc = "Next error" },
+				{ "[e", desc = "Previous error" },
 			},
 		},
 		keys = {
