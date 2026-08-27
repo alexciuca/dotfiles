@@ -5,7 +5,7 @@ return {
 		event = "VeryLazy",
 		opts = {
 			options = {
-				theme = "kanagawa",
+				theme = "auto",
 				globalstatus = true,
 				section_separators = "",
 				component_separators = "",
@@ -28,7 +28,6 @@ return {
 				{ "<leader>t", group = "test" },
 				{ "<leader>c", group = "code" },
 				{ "<leader>r", group = "rename/refactor" },
-				{ "<leader>j", group = "java" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>e", desc = "Line diagnostics" },
 				{ "<leader>q", desc = "Diagnostics → loclist" },

@@ -17,10 +17,8 @@ return {
 				"gomod",
 				"gosum",
 				"gowork",
-				"java",
-				"scala",
-				"kotlin",
 				"c_sharp",
+				"ruby",
 				"javascript",
 				"typescript",
 				"tsx",
@@ -32,7 +30,6 @@ return {
 				"markdown",
 				"markdown_inline",
 				"bash",
-				"make",
 				"dockerfile",
 				"sql",
 			},
@@ -50,12 +47,4 @@ return {
 		opts = {},
 	},
 	{ "tpope/vim-surround", event = "VeryLazy" },
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = { "rafamadriz/friendly-snippets" },
-		event = "InsertEnter",
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load()
-		end,
-	},
 }

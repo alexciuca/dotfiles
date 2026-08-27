@@ -27,6 +27,12 @@ opt.splitright = true
 opt.splitbelow = true
 opt.scrolloff = 4
 
+-- Native completion (nvim 0.12) -- replaces the nvim-cmp stack
+opt.autocomplete = true
+opt.autocompletedelay = 150
+opt.complete = "o,.^5" -- omnifunc first, then <=5 keyword matches from the buffer
+opt.completeopt = { "menu", "menuone", "noselect", "popup" }
+
 vim.filetype.add({
 	extension = {
 		razor = "razor",

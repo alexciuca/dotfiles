@@ -2,49 +2,34 @@ return {
 	{
 		"seblyng/roslyn.nvim",
 		ft = { "cs", "razor" },
-		dependencies = {
-			{ "tris203/rzls.nvim", config = true },
-		},
+		-- Pinned: commits after this call vim.fs.ext(), which does not exist in
+		-- the nvim 0.12-dev build at ~/tools/nvim-macos-arm64 (Feb 2026). Newer
+		-- roslyn.nvim errors out in sln/discovery.lua and no client attaches.
+		-- Drop this pin once nvim is updated.
+		commit = "2dcbbe81b48f8377df2281d9be4f2c84ccfff520",
 		config = function()
-			local rzls_path = vim.fn.expand("$MASON/packages/rzls/libexec")
-			local log_path = (vim.lsp.log and vim.lsp.log.get_filename) and vim.lsp.log.get_filename() or nil
-			local log_dir = log_path and vim.fs.dirname(log_path) or vim.fn.stdpath("state")
-
-			require("roslyn").setup({
-				config = {
-					cmd = {
-						"roslyn",
-						"--stdio",
-						"--logLevel=Information",
-						"--extensionLogDirectory=" .. log_dir,
-						"--razorSourceGenerator=" .. vim.fs.joinpath(rzls_path, "Microsoft.CodeAnalysis.Razor.Compiler.dll"),
-						"--razorDesignTimePath=" .. vim.fs.joinpath(
-							rzls_path,
-							"Targets",
-							"Microsoft.NET.Sdk.Razor.DesignTime.targets"
-						),
-						"--extension",
-						vim.fs.joinpath(rzls_path, "RazorExtension", "Microsoft.VisualStudioCode.RazorExtension.dll"),
+			-- Server settings go through vim.lsp.config now; the plugin finds the
+			-- Mason roslyn binary and the bundled Razor extension on its own.
+			vim.lsp.config("roslyn", {
+				settings = {
+					["csharp|inlay_hints"] = {
+						csharp_enable_inlay_hints_for_implicit_object_creation = true,
+						csharp_enable_inlay_hints_for_implicit_variable_types = true,
+						csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+						csharp_enable_inlay_hints_for_types = true,
+						dotnet_enable_inlay_hints_for_indexer_parameters = true,
+						dotnet_enable_inlay_hints_for_literal_parameters = true,
+						dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+						dotnet_enable_inlay_hints_for_other_parameters = true,
+						dotnet_enable_inlay_hints_for_parameters = true,
 					},
-					handlers = require("rzls.roslyn_handlers"),
-					settings = {
-						["csharp|inlay_hints"] = {
-							csharp_enable_inlay_hints_for_implicit_object_creation = true,
-							csharp_enable_inlay_hints_for_implicit_variable_types = true,
-							csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-							csharp_enable_inlay_hints_for_types = true,
-							dotnet_enable_inlay_hints_for_indexer_parameters = true,
-							dotnet_enable_inlay_hints_for_literal_parameters = true,
-							dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-							dotnet_enable_inlay_hints_for_other_parameters = true,
-							dotnet_enable_inlay_hints_for_parameters = true,
-						},
-						["csharp|code_lens"] = {
-							dotnet_enable_references_code_lens = false,
-						},
+					["csharp|code_lens"] = {
+						dotnet_enable_references_code_lens = false,
 					},
 				},
 			})
+
+			require("roslyn").setup({})
 		end,
 	},
 }

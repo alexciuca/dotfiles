@@ -1,13 +1,8 @@
 return {
 	{
 		"williamboman/mason.nvim",
-		cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-		opts = {
-			registries = {
-				"github:mason-org/mason-registry",
-				"github:Crashdummyy/mason-registry",
-			},
-		},
+		cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate", "MasonLog" },
+		opts = {},
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -15,45 +10,35 @@ return {
 		event = "VeryLazy",
 		opts = {
 			ensure_installed = {
-				-- Lua
-				"lua-language-server",
+				-- Lua            (lua-language-server comes from brew)
 				"stylua",
 				-- Python
 				"basedpyright",
 				"ruff",
 				"debugpy",
-				-- JS / TS / React
+				-- C# / Razor
+				"roslyn-language-server",
+				"csharpier",
+				"netcoredbg",
+				-- C / C++        (clangd + clang-format come from brew llvm)
+				"codelldb",
+				-- Go             (gopls comes from brew)
+				"delve",
+				"gofumpt",
+				"goimports",
+				"golangci-lint",
+				-- Web            (tailwindcss-language-server comes from brew)
 				"vtsls",
 				"eslint-lsp",
-				"tailwindcss-language-server",
 				"emmet-language-server",
 				"prettier",
-				-- Web
+				-- Markup / data
 				"html-lsp",
 				"css-lsp",
 				"json-lsp",
 				"yaml-language-server",
-				-- Java + Spring Boot
-				"jdtls",
-				"java-debug-adapter",
-				"java-test",
-				"spring-boot-tools",
-				-- C# / Razor
-				"roslyn",
-				"rzls",
-				"csharpier",
-				"netcoredbg",
-				-- C / C++
-				"clangd",
-				"clang-format",
-				"codelldb",
+				-- CMake
 				"cmake-language-server",
-				-- Go
-				"gopls",
-				"gofumpt",
-				"goimports",
-				"golangci-lint",
-				"delve",
 			},
 			auto_update = false,
 			run_on_start = true,
@@ -71,12 +56,9 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "hrsh7th/cmp-nvim-lsp" },
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
 			local function enable(server, config)
-				vim.lsp.config(server, vim.tbl_deep_extend("force", { capabilities = capabilities }, config or {}))
+				vim.lsp.config(server, config or {})
 				vim.lsp.enable(server)
 			end
 
@@ -124,11 +106,11 @@ return {
 					"--clang-tidy",
 					"--completion-style=detailed",
 					"--header-insertion=iwyu",
-					"--function-arg-placeholders",
+					"--function-arg-placeholders=true",
 					"--fallback-style=llvm",
 				},
 				init_options = {
-					fallbackFlags = { "-std=c++20" },
+					fallbackFlags = { "-std=c++23" },
 				},
 			})
 

@@ -31,6 +31,11 @@ au("LspAttach", {
 		map("<leader>f", function()
 			require("conform").format({ async = true, lsp_fallback = true })
 		end, "Format buffer")
+
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if client and client:supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+		end
 	end,
 })
 

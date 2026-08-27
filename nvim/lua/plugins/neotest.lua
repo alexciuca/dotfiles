@@ -5,8 +5,6 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-neotest/nvim-nio",
 			"nvim-treesitter/nvim-treesitter",
-			"mfussenegger/nvim-jdtls",
-			"rcasia/neotest-java",
 			"Issafalcon/neotest-dotnet",
 			"nvim-neotest/neotest-python",
 			"fredrikaverpil/neotest-golang",
@@ -21,7 +19,6 @@ return {
 		config = function()
 			require("neotest").setup({
 				adapters = {
-					require("neotest-java")({}),
 					require("neotest-dotnet")({}),
 					require("neotest-python")({ runner = "pytest" }),
 					require("neotest-golang")({ dap_go_enabled = true }),
